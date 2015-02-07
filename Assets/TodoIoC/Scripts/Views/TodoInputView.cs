@@ -22,7 +22,10 @@ public class TodoInputView : View
 
     private void OnInputFieldEndEdit(string text)
     {
-        dispatcher.Dispatch(END_EDIT, text);
-        inputField.text = string.Empty;
+        if (!string.IsNullOrEmpty(text))
+        {
+            dispatcher.Dispatch(END_EDIT, text);
+            inputField.text = string.Empty;
+        }
     }
 }
