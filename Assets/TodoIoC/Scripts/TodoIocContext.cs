@@ -20,6 +20,7 @@ public class TodoIocContext : MVCSContext
         injectionBinder.Bind<TodoModel>().ToSingleton();
 
         mediationBinder.Bind<TodoInputView>().To<TodoInputMediator>();
+        mediationBinder.Bind<TodoScrollView>().To<TodoScrollMediator>();
 
         commandBinder.Bind(ContextEvent.START).To<StartCommand>().Once();
         commandBinder.Bind(TodoIoCEvent.CREATE_TODO).To<CreateTodoCommand>();

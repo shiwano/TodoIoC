@@ -13,6 +13,6 @@ public class CreateTodoCommand : EventCommand
     {
         var comment = evt.data as string;
         var todo = TodoModel.CreateTodo(comment);
-        Debug.Log(todo.Comment + " Todo Created");
+        dispatcher.Dispatch(TodoIoCEvent.CREATED_TODO, todo);
     }
 }
