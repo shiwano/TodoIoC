@@ -5,7 +5,6 @@ using System;
 public class TodoItem : MonoBehaviour
 {
     public Text text;
-    public Image checkmark;
     public Toggle toggle;
     public Button removeButton;
 
@@ -21,6 +20,11 @@ public class TodoItem : MonoBehaviour
     {
         Todo = todo;
         text.text = todo.Comment;
-        checkmark.gameObject.SetActive(todo.IsFinished);
+        SetFinished(todo.IsFinished);
+    }
+
+    public void SetFinished(bool isFinished)
+    {
+        toggle.isOn = isFinished;
     }
 }

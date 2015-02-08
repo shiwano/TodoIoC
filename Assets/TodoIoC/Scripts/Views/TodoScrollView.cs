@@ -8,6 +8,7 @@ using strange.extensions.mediation.impl;
 public class TodoScrollView : View
 {
     public const string REMOVE_TODO = "REMOVE_TODO";
+    public const string TOGGLE_TODO = "TOGGLE_TODO";
 
     [Inject]
     public IEventDispatcher dispatcher { get; set; }
@@ -37,12 +38,24 @@ public class TodoScrollView : View
         }
     }
 
+    public void ToggleTodo(TodoModel.Todo todo)
+    {
+        var todoItem = todoItems.Find(i => i.Todo == todo);
+
+        if (todoItem != null)
+        {
+            todoItem.SetFinished(todo.IsFinished);
+        }
+
+    }
+
     private void CreateTodoItem(TodoModel.Todo todo)
     {
         var todoItem = (Instantiate(todoPrefab) as GameObject).GetComponent<TodoItem>();
         todoItem.SetTodo(todo);
         todoItem.RectTransform.SetParent(content.transform, false);
         todoItem.removeButton.onClick.AddListener(() => dispatcher.Dispatch(REMOVE_TODO, todo));
+        todoItem.toggle.onValueChanged.AddListener(_ => dispatcher.Dispatch(TOGGLE_TODO, todo));
         todoItems.Add(todoItem);
     }
 

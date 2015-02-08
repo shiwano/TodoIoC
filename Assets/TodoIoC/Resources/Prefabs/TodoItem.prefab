@@ -389,7 +389,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 11451534}
-  checkmark: {fileID: 11451532}
   toggle: {fileID: 11451528}
   removeButton: {fileID: 11451538}
 --- !u!222 &22251530
