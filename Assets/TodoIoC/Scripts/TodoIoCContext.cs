@@ -5,13 +5,13 @@ using strange.extensions.context.impl;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.dispatcher.eventdispatcher.impl;
 
-public class TodoIocContext : MVCSContext
+public class TodoIoCContext : MVCSContext
 {
-    public TodoIocContext(MonoBehaviour view) : base(view)
+    public TodoIoCContext(MonoBehaviour view) : base(view)
     {
     }
 
-    public TodoIocContext(MonoBehaviour view, ContextStartupFlags flags) : base(view, flags)
+    public TodoIoCContext(MonoBehaviour view, ContextStartupFlags flags) : base(view, flags)
     {
     }
 

@@ -4,6 +4,6 @@ public class TodoIoCRoot : ContextView
 {
     void Awake()
     {
-        context = new TodoIocContext(this);
+        context = new TodoIoCContext(this);
     }
 }
