@@ -6,20 +6,20 @@ using strange.extensions.mediation.impl;
 public class TodoInputMediator : EventMediator
 {
     [Inject]
-    public TodoInputView view { get; set; }
+    public TodoInputView View { get; set; }
 
     public override void OnRegister()
     {
-        view.dispatcher.AddListener(TodoInputView.END_EDIT, OnEndEdit);
-        view.Initialize();
+        View.dispatcher.AddListener(TodoInputView.END_EDIT, OnViewEndEdit);
+        View.Initialize();
     }
 
     public override void OnRemove()
     {
-        view.dispatcher.RemoveListener(TodoInputView.END_EDIT, OnEndEdit);
+        View.dispatcher.RemoveListener(TodoInputView.END_EDIT, OnViewEndEdit);
     }
 
-    private void OnEndEdit(IEvent evt)
+    private void OnViewEndEdit(IEvent evt)
     {
         var text = evt.data as string;
         dispatcher.Dispatch(TodoIoCEvent.CREATE_TODO, text);

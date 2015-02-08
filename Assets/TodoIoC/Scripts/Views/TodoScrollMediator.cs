@@ -16,8 +16,8 @@ public class TodoScrollMediator : EventMediator
         dispatcher.AddListener(TodoIoCEvent.REMOVED_TODO, OnTodoRemoved);
         dispatcher.AddListener(TodoIoCEvent.TOGGLED_TODO, OnTodoToggled);
 
-        View.dispatcher.AddListener(TodoScrollView.REMOVE_TODO, OnTodoRemove);
-        View.dispatcher.AddListener(TodoScrollView.TOGGLE_TODO, OnTodoToggle);
+        View.dispatcher.AddListener(TodoScrollView.REMOVE_TODO, OnViewRemoveTodo);
+        View.dispatcher.AddListener(TodoScrollView.TOGGLE_TODO, OnViewToggleTodo);
         View.dispatcher.AddListener(TodoScrollView.FILTER_BY_ALL, OnViewFilterByAll);
         View.dispatcher.AddListener(TodoScrollView.FILTER_BY_ACTIVE, OnViewFilterByActive);
         View.dispatcher.AddListener(TodoScrollView.FILTER_BY_COMPLETED, OnViewFilterByCompleted);
@@ -31,8 +31,8 @@ public class TodoScrollMediator : EventMediator
         dispatcher.RemoveListener(TodoIoCEvent.REMOVED_TODO, OnTodoRemoved);
         dispatcher.RemoveListener(TodoIoCEvent.TOGGLED_TODO, OnTodoToggled);
 
-        View.dispatcher.RemoveListener(TodoScrollView.REMOVE_TODO, OnTodoRemove);
-        View.dispatcher.RemoveListener(TodoScrollView.TOGGLE_TODO, OnTodoToggle);
+        View.dispatcher.RemoveListener(TodoScrollView.REMOVE_TODO, OnViewRemoveTodo);
+        View.dispatcher.RemoveListener(TodoScrollView.TOGGLE_TODO, OnViewToggleTodo);
         View.dispatcher.RemoveListener(TodoScrollView.FILTER_BY_ALL, OnViewFilterByAll);
         View.dispatcher.RemoveListener(TodoScrollView.FILTER_BY_ACTIVE, OnViewFilterByActive);
         View.dispatcher.RemoveListener(TodoScrollView.FILTER_BY_COMPLETED, OnViewFilterByCompleted);
@@ -43,28 +43,28 @@ public class TodoScrollMediator : EventMediator
         View.SetTodos(TodoModel.Todos);
     }
 
-    private void OnTodoRemove(IEvent evt)
-    {
-        var todo = evt.data as TodoModel.Todo;
-        dispatcher.Dispatch(TodoIoCEvent.REMOVE_TODO, todo);
-    }
-
     private  void OnTodoRemoved(IEvent evt)
     {
         var todo = evt.data as TodoModel.Todo;
         View.RemoveTodo(todo);
     }
 
-    private  void OnTodoToggle(IEvent evt)
-    {
-        var todo = evt.data as TodoModel.Todo;
-        dispatcher.Dispatch(TodoIoCEvent.TOGGLE_TODO, todo);
-    }
-
     private  void OnTodoToggled(IEvent evt)
     {
         var todo = evt.data as TodoModel.Todo;
         View.ToggleTodo(todo);
+    }
+
+    private void OnViewRemoveTodo(IEvent evt)
+    {
+        var todo = evt.data as TodoModel.Todo;
+        dispatcher.Dispatch(TodoIoCEvent.REMOVE_TODO, todo);
+    }
+
+    private  void OnViewToggleTodo(IEvent evt)
+    {
+        var todo = evt.data as TodoModel.Todo;
+        dispatcher.Dispatch(TodoIoCEvent.TOGGLE_TODO, todo);
     }
 
     private void OnViewFilterByAll()
