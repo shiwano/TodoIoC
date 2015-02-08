@@ -1,5 +1,8 @@
 # Unity3D + StrangeIoC TodoMVC Example
 
-[Unity - Game Engine](http://unity3d.com/sites/default/files/frontpage/2015-02-armello-front_0.jpg)
+[Web Player Build](http://shiwano.github.io/TodoIoC/)
 
-[StrangeIoC](http://strangeioc.github.io/strangeioc/)
+## Informations
+
+* [Unity - Game Engine](http://unity3d.com/sites/default/files/frontpage/2015-02-armello-front_0.jpg)
+* [StrangeIoC](http://strangeioc.github.io/strangeioc/)
