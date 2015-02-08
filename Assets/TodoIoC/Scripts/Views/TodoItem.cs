@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class TodoItem : MonoBehaviour
 {
     public Text text;
     public Image checkmark;
+    public Toggle toggle;
+    public Button removeButton;
 
     public TodoModel.Todo Todo { get; private set; }
     public RectTransform RectTransform { get; private set; }

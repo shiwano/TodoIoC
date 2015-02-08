@@ -25,6 +25,6 @@ public class TodoIocContext : MVCSContext
         commandBinder.Bind(ContextEvent.START).To<StartCommand>().Once();
         commandBinder.Bind(TodoIoCEvent.CREATE_TODO).To<CreateTodoCommand>();
         commandBinder.Bind(TodoIoCEvent.FINISH_TODO).To<FinishTodoCommand>();
-        commandBinder.Bind(TodoIoCEvent.REMOVE_ALL_TODOS).To<RemoveAllTodosCommand>();
+        commandBinder.Bind(TodoIoCEvent.REMOVE_TODO).To<RemoveTodoCommand>();
     }
 }

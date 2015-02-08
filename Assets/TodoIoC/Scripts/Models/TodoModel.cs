@@ -33,8 +33,8 @@ public class TodoModel
         return todo;
     }
 
-    public void ClearAllTodos()
+    public void RemoveTodo(Todo todo)
     {
-        Todos.Clear();
+        Todos.Remove(todo);
     }
 }
