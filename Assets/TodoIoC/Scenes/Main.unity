@@ -468,6 +468,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   todoPrefab: {fileID: 169112, guid: dbc5afc3d7a6f41898fb7ea8addb8c32, type: 2}
   content: {fileID: 1398236984}
+  itemCountText: {fileID: 1853602359}
+  allButton: {fileID: 1426579708}
+  activeButton: {fileID: 257435616}
+  completedButton: {fileID: 823889185}
+  selectedButtonColor: {r: 1, g: .904411793, b: .904411793, a: 1}
 --- !u!4 &691530918
 Transform:
   m_ObjectHideFlags: 0

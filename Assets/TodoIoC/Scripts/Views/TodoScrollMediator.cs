@@ -12,20 +12,30 @@ public class TodoScrollMediator : EventMediator
 
     public override void OnRegister()
     {
-        View.dispatcher.AddListener(TodoScrollView.REMOVE_TODO, OnTodoRemove);
-        View.dispatcher.AddListener(TodoScrollView.TOGGLE_TODO, OnTodoToggle);
         dispatcher.AddListener(TodoIoCEvent.CREATED_TODO, OnTodoCreated);
         dispatcher.AddListener(TodoIoCEvent.REMOVED_TODO, OnTodoRemoved);
         dispatcher.AddListener(TodoIoCEvent.TOGGLED_TODO, OnTodoToggled);
+
+        View.dispatcher.AddListener(TodoScrollView.REMOVE_TODO, OnTodoRemove);
+        View.dispatcher.AddListener(TodoScrollView.TOGGLE_TODO, OnTodoToggle);
+        View.dispatcher.AddListener(TodoScrollView.FILTER_BY_ALL, OnViewFilterByAll);
+        View.dispatcher.AddListener(TodoScrollView.FILTER_BY_ACTIVE, OnViewFilterByActive);
+        View.dispatcher.AddListener(TodoScrollView.FILTER_BY_COMPLETED, OnViewFilterByCompleted);
+
+        View.Initialize();
     }
 
     public override void OnRemove()
     {
-        View.dispatcher.RemoveListener(TodoScrollView.REMOVE_TODO, OnTodoRemove);
-        View.dispatcher.RemoveListener(TodoScrollView.TOGGLE_TODO, OnTodoToggle);
         dispatcher.RemoveListener(TodoIoCEvent.CREATED_TODO, OnTodoCreated);
         dispatcher.RemoveListener(TodoIoCEvent.REMOVED_TODO, OnTodoRemoved);
         dispatcher.RemoveListener(TodoIoCEvent.TOGGLED_TODO, OnTodoToggled);
+
+        View.dispatcher.RemoveListener(TodoScrollView.REMOVE_TODO, OnTodoRemove);
+        View.dispatcher.RemoveListener(TodoScrollView.TOGGLE_TODO, OnTodoToggle);
+        View.dispatcher.RemoveListener(TodoScrollView.FILTER_BY_ALL, OnViewFilterByAll);
+        View.dispatcher.RemoveListener(TodoScrollView.FILTER_BY_ACTIVE, OnViewFilterByActive);
+        View.dispatcher.RemoveListener(TodoScrollView.FILTER_BY_COMPLETED, OnViewFilterByCompleted);
     }
 
     private void OnTodoCreated()
@@ -55,5 +65,23 @@ public class TodoScrollMediator : EventMediator
     {
         var todo = evt.data as TodoModel.Todo;
         View.ToggleTodo(todo);
+    }
+
+    private void OnViewFilterByAll()
+    {
+        View.SetFilter(null);
+        View.ToggleFilterButtons(View.allButton);
+    }
+
+    private void OnViewFilterByActive()
+    {
+        View.SetFilter((todo) => !todo.IsFinished);
+        View.ToggleFilterButtons(View.activeButton);
+    }
+
+    private void OnViewFilterByCompleted()
+    {
+        View.SetFilter((todo) => todo.IsFinished);
+        View.ToggleFilterButtons(View.completedButton);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
@@ -9,14 +9,32 @@ public class TodoScrollView : View
 {
     public const string REMOVE_TODO = "REMOVE_TODO";
     public const string TOGGLE_TODO = "TOGGLE_TODO";
+    public const string FILTER_BY_ALL = "FILTER_BY_ALL";
+    public const string FILTER_BY_ACTIVE = "FILTER_BY_ACTIVE";
+    public const string FILTER_BY_COMPLETED = "FILTER_BY_COMPLETED";
 
     [Inject]
     public IEventDispatcher dispatcher { get; set; }
 
     public GameObject todoPrefab;
     public GameObject content;
+    public Text itemCountText;
+    public Button allButton;
+    public Button activeButton;
+    public Button completedButton;
+    public Color selectedButtonColor;
 
-    private List<TodoItem> todoItems = new List<TodoItem>();
+    private readonly List<TodoItem> todoItems = new List<TodoItem>();
+    private Predicate<TodoModel.Todo> predicateForFilter;
+
+    public void Initialize()
+    {
+        allButton.onClick.AddListener(() => dispatcher.Dispatch(FILTER_BY_ALL));
+        activeButton.onClick.AddListener(() => dispatcher.Dispatch(FILTER_BY_ACTIVE));
+        completedButton.onClick.AddListener(() => dispatcher.Dispatch(FILTER_BY_COMPLETED));
+
+        ToggleFilterButtons(allButton);
+    }
 
     public void SetTodos(List<TodoModel.Todo> todos)
     {
@@ -24,7 +42,8 @@ public class TodoScrollView : View
 
         foreach (var todo in todos)
         {
-            CreateTodoItem(todo);
+            var todoItem = CreateTodoItem(todo);
+            FilterTodoItem(todoItem);
         }
     }
 
@@ -46,10 +65,28 @@ public class TodoScrollView : View
         {
             todoItem.SetFinished(todo.IsFinished);
         }
-
     }
 
-    private void CreateTodoItem(TodoModel.Todo todo)
+    public void SetFilter(Predicate<TodoModel.Todo> predicate)
+    {
+        predicateForFilter = predicate;
+
+        foreach (var todoItem in todoItems)
+        {
+            FilterTodoItem(todoItem);
+        }
+    }
+
+    public void ToggleFilterButtons(Button button)
+    {
+        allButton.image.color = Color.white;
+        activeButton.image.color = Color.white;
+        completedButton.image.color = Color.white;
+
+        button.image.color = selectedButtonColor;
+    }
+
+    private TodoItem CreateTodoItem(TodoModel.Todo todo)
     {
         var todoItem = (Instantiate(todoPrefab) as GameObject).GetComponent<TodoItem>();
         todoItem.SetTodo(todo);
@@ -57,6 +94,7 @@ public class TodoScrollView : View
         todoItem.removeButton.onClick.AddListener(() => dispatcher.Dispatch(REMOVE_TODO, todo));
         todoItem.toggle.onValueChanged.AddListener(_ => dispatcher.Dispatch(TOGGLE_TODO, todo));
         todoItems.Add(todoItem);
+        return todoItem;
     }
 
     private void Clear()
@@ -72,5 +110,11 @@ public class TodoScrollView : View
         todoItem.RectTransform.SetParent(null, false);
         Destroy(todoItem.gameObject);
         todoItems.Remove(todoItem);
+    }
+
+    private void FilterTodoItem(TodoItem todoItem)
+    {
+        var isActive = predicateForFilter == null || predicateForFilter.Invoke(todoItem.Todo);
+        todoItem.gameObject.SetActive(isActive);
     }
 }
