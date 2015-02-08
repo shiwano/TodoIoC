@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
 
@@ -18,7 +19,7 @@ public class TodoScrollView : View
 
     public GameObject todoPrefab;
     public GameObject content;
-    public Text itemCountText;
+    public Text activeItemCountText;
     public Button allButton;
     public Button activeButton;
     public Button completedButton;
@@ -34,6 +35,7 @@ public class TodoScrollView : View
         completedButton.onClick.AddListener(() => dispatcher.Dispatch(FILTER_BY_COMPLETED));
 
         ToggleFilterButtons(allButton);
+        UpdateActiveItemCount();
     }
 
     public void SetTodos(List<TodoModel.Todo> todos)
@@ -84,6 +86,13 @@ public class TodoScrollView : View
         completedButton.image.color = Color.white;
 
         button.image.color = selectedButtonColor;
+    }
+
+    public void UpdateActiveItemCount()
+    {
+        var count = todoItems.Count(i => !i.Todo.IsFinished);
+        var suffixText = count == 1 ? "\nitem left" : "\nitems left";
+        activeItemCountText.text = count + suffixText;
     }
 
     private TodoItem CreateTodoItem(TodoModel.Todo todo)

@@ -41,18 +41,21 @@ public class TodoScrollMediator : EventMediator
     private void OnTodoCreated()
     {
         View.SetTodos(TodoModel.Todos);
+        View.UpdateActiveItemCount();
     }
 
     private  void OnTodoRemoved(IEvent evt)
     {
         var todo = evt.data as TodoModel.Todo;
         View.RemoveTodo(todo);
+        View.UpdateActiveItemCount();
     }
 
     private  void OnTodoToggled(IEvent evt)
     {
         var todo = evt.data as TodoModel.Todo;
         View.ToggleTodo(todo);
+        View.UpdateActiveItemCount();
     }
 
     private void OnViewRemoveTodo(IEvent evt)

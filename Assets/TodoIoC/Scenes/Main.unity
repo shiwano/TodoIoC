@@ -468,7 +468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   todoPrefab: {fileID: 169112, guid: dbc5afc3d7a6f41898fb7ea8addb8c32, type: 2}
   content: {fileID: 1398236984}
-  itemCountText: {fileID: 1853602359}
+  activeItemCountText: {fileID: 1853602359}
   allButton: {fileID: 1426579708}
   activeButton: {fileID: 257435616}
   completedButton: {fileID: 823889185}
@@ -1332,7 +1332,7 @@ GameObject:
   - 222: {fileID: 1853602360}
   - 114: {fileID: 1853602359}
   m_Layer: 5
-  m_Name: ItemCountText
+  m_Name: ActiveItemCountText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
